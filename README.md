@@ -33,7 +33,7 @@ Click the button below to start a new development environment:
 
 ## Environment Variables
 
-- `DEV_MODE`: Set to `true` for local development mode.
+- `DEV_MODE`: Set to `true` for local development mode. This enables debug logging and other development features.
 
 ## API Documentation
 

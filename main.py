@@ -2,12 +2,14 @@ import logging
 import os
 from fastapi import FastAPI
 from pydantic_settings import BaseSettings
+from pydantic import Field
 
 class Settings(BaseSettings):
-    dev_mode: bool = False
+    dev_mode: bool = Field(default=False, env='DEV_MODE')
 
     class Config:
-        env_prefix = ''  # This allows us to use DEV_MODE instead of DEV_MODE
+        env_file = ".env"
+        env_file_encoding = 'utf-8'
 
 settings = Settings()
 
@@ -39,3 +41,7 @@ async def generate_error():
         logger.exception("An error occurred")
         raise e
     return {"message": "Error message generated successfully"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=settings.dev_mode)
