@@ -7,6 +7,8 @@ print("dev_mode: ", settings.dev_mode)
 
 logger = logging.getLogger(__name__)
 
+app = FastAPI()
+
 @app.get("/generate-log")
 async def generate_log():
     logger.info("This is an info log")

@@ -1,6 +1,6 @@
 from pydantic_settings import BaseSettings
 from pydantic import Field
-
+import logging
 
 class Settings(BaseSettings):
     dev_mode: bool = Field(default=False, env='DEV_MODE')
@@ -11,7 +11,6 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-app = FastAPI()
 
 # Configure logging
 logging.basicConfig(
