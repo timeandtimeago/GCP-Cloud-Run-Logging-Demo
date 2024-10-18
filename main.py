@@ -6,6 +6,9 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     dev_mode: bool = False
 
+    class Config:
+        env_prefix = ''  # This allows us to use DEV_MODE instead of DEV_MODE
+
 settings = Settings()
 
 app = FastAPI()
