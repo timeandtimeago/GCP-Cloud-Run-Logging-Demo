@@ -5,24 +5,9 @@ tasks:
   - init: |
       pip install -r requirements.txt
     command: |
-      echo "Welcome to your Python project!"
-      python --version
-
-vscode:
-  extensions:
-    - ms-python.python
-    - ms-python.vscode-pylance
+      echo "Starting FastAPI server in development mode..."
+      uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 ports:
   - port: 8000
     onOpen: open-preview
-
-github:
-  prebuilds:
-    master: true
-    branches: true
-    pullRequests: true
-    pullRequestsFromForks: false
-    addCheck: true
-    addComment: false
-    addBadge: true
