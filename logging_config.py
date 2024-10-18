@@ -1,19 +1,18 @@
 import logging.config
 import structlog
 from config import settings
-
 from rich.logging import RichHandler
 import traceback
 from structlog.processors import TimeStamper
 
-
-def remove_record_key(logger, method_name, event_dict):
-    if "_record" in event_dict:
-        del event_dict["_record"]
-    if "_from_structlog" in event_dict:
-        del event_dict["_from_structlog"]
-    return event_dict
-
+####
+# This module creates a logging configuration that can be used with the standard python logging library. 
+# When running in local dev mode it uses the Rich log formatter. 
+# When not running in local dev mode, it uses structlog formatters and a custom formatter to output structured JSON logs. 
+# Note: Special handling has been added to allo for GCP log aggregation to work on the structured. logs. 
+# Normally GCP log aggregation works on standard (non json) logs, 
+# # but we have to do some manipulation below to enable log aggregation to work on structued json logs. 
+####
 def format_for_GCP(logger, method_name, event_dict):
     event_dict['severity'] = event_dict.get('level', 'unknown').upper()
     event_dict['message'] = event_dict.get('event', 'unknown')
@@ -48,19 +47,12 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "plain": {
-            "()": structlog.stdlib.ProcessorFormatter,
-            "processors": [
-                remove_record_key,
-                structlog.dev.ConsoleRenderer(), 
-                ],
-        },
         "json": {
             "()": structlog.stdlib.ProcessorFormatter,
             "processors": [
-                structlog.processors.TimeStamper(fmt="iso"),
-                structlog.stdlib.add_log_level,
-                format_for_GCP,
+                structlog.processors.TimeStamper(fmt="iso"), # Add timestamp
+                structlog.stdlib.add_log_level, # Add log level
+                format_for_GCP, # Add key & contents for GCP log aggregation. 
                 structlog.stdlib.PositionalArgumentsFormatter(),
                 structlog.processors.UnicodeDecoder(),              
                 structlog.processors.dict_tracebacks, 
@@ -79,7 +71,7 @@ LOGGING = {
     },
     "root": {
         "level": "INFO",
-        "handlers": ["console" if not settings.dev_mode else "rich"],
+        "handlers": ["console" if not settings.dev_mode else "rich"], # Use Rich log formatter if local dev - otherwise use json. 
     },
 }
 
