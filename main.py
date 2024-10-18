@@ -2,6 +2,7 @@ import logging
 import os
 from fastapi import FastAPI
 from config import settings
+import logging_config
 
 print("dev_mode: ", settings.dev_mode)
 
@@ -31,4 +32,4 @@ async def generate_error():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=settings.dev_mode)
+    uvicorn.run("main:app", log_config=None, host="0.0.0.0", port=8000, reload=settings.dev_mode)

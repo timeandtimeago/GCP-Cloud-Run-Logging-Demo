@@ -1,6 +1,6 @@
 import logging.config
 import structlog
-from .config import settings
+from config import settings
 
 from rich.logging import RichHandler
 
