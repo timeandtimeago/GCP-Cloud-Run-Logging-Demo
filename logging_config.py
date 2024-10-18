@@ -1,10 +1,13 @@
 import logging.config
 import structlog
-from .config import is_local_dev
+from .config import settings
+
 from rich.logging import RichHandler
 
 import traceback
 from structlog.processors import TimeStamper
+
+print("dev_mode: ", settings.dev_mode)
 
 def remove_record_key(logger, method_name, event_dict):
     if "_record" in event_dict:
@@ -78,7 +81,7 @@ LOGGING = {
     },
     "root": {
         "level": "INFO",
-        "handlers": ["console" if not is_local_dev else "rich"],
+        "handlers": ["console" if not settings.dev_mode else "rich"],
     },
 }
 

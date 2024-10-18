@@ -1,25 +1,10 @@
 import logging
 import os
 from fastapi import FastAPI
-from pydantic_settings import BaseSettings
-from pydantic import Field
+from config import settings
 
-class Settings(BaseSettings):
-    dev_mode: bool = Field(default=False, env='DEV_MODE')
+print("dev_mode: ", settings.dev_mode)
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = 'utf-8'
-
-settings = Settings()
-
-app = FastAPI()
-
-# Configure logging
-logging.basicConfig(
-    level=logging.DEBUG if settings.dev_mode else logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
 logger = logging.getLogger(__name__)
 
 @app.get("/generate-log")
