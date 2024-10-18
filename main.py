@@ -26,7 +26,6 @@ async def generate_error():
         my_list = [1, 2, 3]
         print(my_list[10])
     except Exception as e:
-        logger.exception("An error occurred")
         raise e
     return {"message": "Error message generated successfully"}
 

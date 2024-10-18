@@ -3,11 +3,9 @@ import structlog
 from config import settings
 
 from rich.logging import RichHandler
-
 import traceback
 from structlog.processors import TimeStamper
 
-print("dev_mode: ", settings.dev_mode)
 
 def remove_record_key(logger, method_name, event_dict):
     if "_record" in event_dict:
