@@ -13,7 +13,7 @@ steps:
     args:
     - 'run'
     - 'deploy'
-    - 'fastapi-log-generator'
+    - 'fastapi-log-generator-structlog'
     - '--image'
     - 'gcr.io/$PROJECT_ID/fastapi-log-generator:$COMMIT_SHA'
     - '--region'

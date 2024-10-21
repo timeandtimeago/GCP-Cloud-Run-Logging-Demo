@@ -10,10 +10,3 @@ class Settings(BaseSettings):
         env_file_encoding = 'utf-8'
 
 settings = Settings()
-
-
-# Configure logging
-logging.basicConfig(
-    level=logging.DEBUG if settings.dev_mode else logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
