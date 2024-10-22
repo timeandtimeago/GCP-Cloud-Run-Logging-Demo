@@ -1,14 +1,14 @@
 steps:
   # Build the container image
-  - name: 'us-central1-docker.pkg.dev/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'us-central1-docker.pkg.dev/demos-00134568945/demos/fastapi-log-generator:$COMMIT_SHA', '.']
 
   # Push the container image to Artifact Registry
-  - name: 'us-central1-docker.pkg.dev/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/demos-00134568945/demos/fastapi-log-generator:$COMMIT_SHA']
 
   # Deploy container image to Cloud Run
-  - name: 'us-central1-docker.pkg.dev/google.com/cloudsdktool/cloud-sdk'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
     - 'run'
@@ -25,7 +25,7 @@ steps:
     - 'DEV_MODE=false'
 
   # Deploy container image to Cloud Run
-  - name: 'us-central1-docker.pkg.dev/google.com/cloudsdktool/cloud-sdk'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
     - 'run'
